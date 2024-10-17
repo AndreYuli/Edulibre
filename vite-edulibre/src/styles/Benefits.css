@@ -1,0 +1,70 @@
+.benefits-section {
+    position: relative;
+    width: 100%;
+    background-color: #B5F3B9;
+    padding: 76px 20px; /* Reduced side padding for mobile */
+}
+
+.benefits-content {
+    max-width: 1311px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items on mobile */
+}
+
+.benefit-item {
+    width: 100%; /* Full width on mobile */
+    max-width: 523px; /* Max width for larger screens */
+    height: auto; /* Allow height to adjust to content */
+    position: relative;
+    border: 2px solid #2E7D32;
+    padding: 20px;
+    margin-bottom: 20px; /* Add space between items */
+}
+
+.benefit-item h2 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px; /* Slightly smaller for mobile */
+    line-height: 1.3;
+    color: #2E7D32;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.benefit-item p {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px; /* Smaller for mobile */
+    line-height: 1.5;
+    color: #757575;
+    text-align: center;
+}
+
+/* Media query for screens larger than 768px */
+@media (min-width: 768px) {
+    .benefits-section {
+        padding: 76px 50px; /* Restore original padding */
+    }
+
+    .benefits-content {
+        align-items: flex-start; /* Start zigzag pattern */
+    }
+
+    .benefit-item {
+        width: 523px; /* Fixed width for larger screens */
+    }
+
+    .benefit-item:nth-child(even) {
+        align-self: flex-end;
+    }
+
+    .benefit-item h2 {
+        font-size: 29.125px; /* Restore original size */
+    }
+
+    .benefit-item p {
+        font-size: 29.125px; /* Restore original size */
+    }
+}
