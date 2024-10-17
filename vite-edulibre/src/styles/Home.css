@@ -1,0 +1,115 @@
+.introduction-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 40px 20px;
+    background-color: #ffffff;
+}
+
+.introduction-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.introduction-image {
+    flex:1;
+    max-width: 35%;
+}
+
+.introduction-image img {
+    width: 100%;
+    height: auto;       
+}
+
+.introduction-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 500px;
+    margin-left: 50px;
+}
+
+.introduction-text h1 {
+    font-weight: 700;
+    font-size: clamp(24px, 4vw, 32px);
+    line-height: 1.3;
+    color: #757575;
+    margin-bottom: 20px;
+}
+
+.introduction-text button {
+    width: auto;
+    font-family: 'Amiko';
+    padding: 12px 24px;
+    font-size: 30px;
+    background-color: #2E7D32;
+    color: #f0f0f0;
+    border: none;
+    border-radius: 4px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.introduction-text button:hover {
+    background-color: #334134;
+}
+
+@media (max-width: 768px) {
+    .introduction-content {
+        flex-direction: column;
+    }
+
+    .introduction-image,
+    .introduction-text {
+        max-width: 100%;
+    }
+}
+
+.information-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 80vh;
+    padding: 40px 20px;
+    background-color: #B5F3B9;
+}
+
+.information-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+}
+
+.information-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 500px;
+    margin-left: 50px;
+}
+
+.information-text h1 {
+    font-weight: 700;
+    font-size: clamp(24px, 4vw, 32px);
+    line-height: 1.3;
+    color: #757575;
+    margin-bottom: 20px;
+}
+
+.information-image {
+    flex: 1;
+    max-width: 100%;
+}
+
+.information-image img {
+    width: 100%;
+    height: auto;
+
