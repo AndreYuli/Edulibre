@@ -1,0 +1,58 @@
+.custom-button {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-time) ease, transform 0.1s ease;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  margin-top: 10px;
+}
+
+.custom-button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px var(--shadow-color);
+}
+
+.custom-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 2px var(--shadow-color);
+}
+
+.custom-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.custom-button.loading {
+  animation: pulse 1.5s infinite;
+  background-color: var(--secondary-color);
+  cursor: wait;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@media (max-width: 768px) {
+  .custom-button {
+    padding: 12px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-button {
+    padding: 10px;
+    font-size: 14px;
+  }
+}

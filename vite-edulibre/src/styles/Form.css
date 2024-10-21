@@ -1,0 +1,59 @@
+.custom-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.custom-form input,
+.custom-form select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all var(--transition-time) ease;
+}
+
+.custom-form input:focus,
+.custom-form select:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 2px rgba(134, 224, 138, 0.2);
+  outline: none;
+}
+
+.custom-form input::placeholder {
+  color: #aaa;
+}
+
+.custom-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%234a4a4a' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+}
+
+.custom-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--label-color);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .custom-form input,
+  .custom-form select {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-form input,
+  .custom-form select {
+    padding: 8px;
+    font-size: 13px;
+  }
+}

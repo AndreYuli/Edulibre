@@ -1,0 +1,73 @@
+@import './SharedStyles.css';
+
+.selection-page {
+  position: relative;
+  overflow: hidden;
+  padding: 2.5rem 1.25rem;
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, var(--background-color), var(--secondary-color));
+}
+
+.selection-page h1 {
+  font-size: 3rem;
+  color: var(--primary-color);
+  text-shadow: 2px 2px 4px var(--shadow-color);
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.intro-message {
+  font-size: 1.5rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.selection-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1200px;
+  width: 100%;
+  z-index: 2;
+}
+
+.selection-card {
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  box-shadow: 0 1.25rem 2.5rem var(--shadow-color);
+  transition: all var(--transition-time) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  width: calc(33.33% - 2rem);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selection-card:hover {
+  transform: translateY(-0.9375rem) scale(1.03);
+  box-shadow: 0 1.875rem 3.75rem rgba(0,0,0,0.2);
+}
+
+@media (max-width: 768px) {
+  .selection-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .selection-card {
+    width: 90%;
+    max-width: 300px;
+  } 
+}

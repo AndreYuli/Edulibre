@@ -1,0 +1,41 @@
+@import './SharedStyles.css';
+
+.materia-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.materia-emoji {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.materia-nombre {
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  font-weight: bold;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .materia-emoji {
+    font-size: 3rem;
+  }
+
+  .materia-nombre {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .materia-emoji {
+    font-size: 2.5rem;
+  }
+
+  .materia-nombre {
+    font-size: 1rem;
+  }
+}

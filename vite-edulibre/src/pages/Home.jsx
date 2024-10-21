@@ -19,7 +19,7 @@ const Home = () => {
                   </div>
                   <div className='introduction-text'>
                       <h1>Completa tu bachillerato de forma divertida, efectiva y sin costo.</h1>
-                      <button>Comienza ahora</button>
+                      <button onClick={() => window.location.href = '/login'}>Comienza ahora</button>
                   </div>
               </div>
              </section>

@@ -1,0 +1,184 @@
+@import './SharedStyles.css';
+
+.study-preferences {
+  position: relative;
+  overflow: hidden;
+  padding: 2.5rem 1.25rem;
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, var(--background-color), var(--secondary-color));
+}
+
+.study-preferences h1 {
+  font-size: 3rem;
+  color: var(--primary-color);
+  text-shadow: 2px 2px 4px var(--shadow-color);
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.preference-options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  max-width: 56.25rem;
+  width: 100%;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.preference-option {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  width: calc(33.33% - 1.33rem);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.preference-option:hover {
+  transform: translateY(-0.5rem);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+}
+
+.emoji-container {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.emoji {
+  font-size: 8rem;
+}
+
+.option-title-container {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+.option-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.study-preferences-stickers {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sticker {
+  position: absolute;
+  opacity: 0.3;
+  font-size: 1.5rem;
+  animation: rain linear infinite;
+}
+
+@keyframes rain {
+  0% {
+    transform: translateY(-100%) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Variaciones para los stickers */
+.sticker:nth-child(even) {
+  animation-duration: 5s;
+}
+
+.sticker:nth-child(odd) {
+  animation-duration: 7s;
+}
+
+.sticker:nth-child(3n) {
+  animation-duration: 6s;
+}
+
+.sticker:nth-child(3n+1) {
+  animation-delay: 2s;
+}
+
+.sticker:nth-child(3n+2) {
+  animation-delay: 1s;
+}
+
+@media (max-width: 1024px) {
+  .preference-option {
+    width: calc(50% - 1rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .study-preferences h1 {
+    font-size: 2.5rem;
+  }
+
+  .preference-options {
+    gap: 1.5rem;
+  }
+
+  .preference-option {
+    width: calc(100% - 1rem);
+    max-width: 300px;
+  }
+
+  .emoji {
+    font-size: 6rem;
+  }
+
+  .option-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .study-preferences h1 {
+    font-size: 2rem;
+  }
+
+  .preference-option {
+    padding: 1rem;
+  }
+
+  .emoji {
+    font-size: 5rem;
+  }
+
+  .option-title {
+    font-size: 1.2rem;
+  }
+}

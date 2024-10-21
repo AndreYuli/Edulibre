@@ -1,0 +1,71 @@
+@import './SharedStyles.css';
+
+.grado-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.grado-numero {
+  font-size: 4rem; /* Aumentado ligeramente para pantallas grandes */
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.grado-nombre {
+  font-size: 1.5rem; /* Aumentado ligeramente para pantallas grandes */
+  color: var(--label-color);
+}
+
+@media (max-width: 1200px) {
+  .grado-numero {
+    font-size: 3.5rem;
+  }
+  
+  .grado-nombre {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .grado-numero {
+    font-size: 3rem;
+  }
+  
+  .grado-nombre {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .grado-numero {
+    font-size: 2.5rem;
+  }
+  
+  .grado-nombre {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .grado-numero {
+    font-size: 2.2rem;
+  }
+  
+  .grado-nombre {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grado-numero {
+    font-size: 2rem;
+  }
+  
+  .grado-nombre {
+    font-size: 0.9rem;
+  }
+}

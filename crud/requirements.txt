@@ -1,0 +1,10 @@
+python-dotenv
+psycopg2-binary
+sqlmodel
+fastapi
+uvicorn
+pydantic[email]
+passlib[bcrypt]
+
+
+
