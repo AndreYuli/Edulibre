@@ -55,6 +55,34 @@ export const showUnexpectedError = (message) => {
   });
 };
 
+// Nuevas funciones para manejar errores de preferencias de estudio
+export const showPreferencesSaveSuccess = () => {
+  Swal.fire({
+    icon: 'success',
+    title: '¡Éxito!',
+    text: 'Tus preferencias de estudio se han guardado correctamente.',
+    confirmButtonText: 'Aceptar'
+  });
+};
+
+export const showPreferencesSaveError = () => {
+  Swal.fire({
+    icon: 'error',
+    title: 'Error al guardar preferencias',
+    text: 'Hubo un problema al guardar tus preferencias de estudio. Por favor, intenta de nuevo.',
+    confirmButtonText: 'Entendido'
+  });
+};
+
+export const showPreferencesFetchError = () => {
+  Swal.fire({
+    icon: 'error',
+    title: 'Error al recuperar preferencias',
+    text: 'No se pudieron recuperar tus preferencias de estudio. Por favor, intenta de nuevo.',
+    confirmButtonText: 'Entendido'
+  });
+};
+
 export const showFormErrors = (errors) => {
   Swal.fire({
     icon: 'error',

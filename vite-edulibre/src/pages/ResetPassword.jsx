@@ -54,7 +54,7 @@ const ResetPassword = () => {
       <Header />
       <div className="reset-password-page">
         <div className="reset-password-container">
-          <h2>Restablecer Contraseña</h2>
+          <h2>Vamos a restablecer su Contraseña</h2>
           <form onSubmit={handleSubmit} className="reset-password-form">
             <input
               type="password"

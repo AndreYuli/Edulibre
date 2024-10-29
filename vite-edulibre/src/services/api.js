@@ -66,10 +66,11 @@ export const restablecerContrasena = async (token, newPassword) => {
 // Nueva función para guardar las preferencias de estudio del usuario
 export const saveUserPreferences = async (preferences) => {
   try {
-    const response = await api.post('api/v1/user-preferences', preferences);
-    return response.data;
+    const response = await api.post('api/v1/user-preferences', preferences)  // {{ edit_1 }}
+    return response.data;  // Devuelve los datos de la respuesta
   } catch (error) {
-    handleError(error);
+    handleError(error);  // Manejo de errores
+    throw error;  // Vuelve a lanzar el error para que pueda ser manejado más arriba
   }
 };
 

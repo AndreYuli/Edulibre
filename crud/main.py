@@ -1,25 +1,46 @@
+# FastAPI y dependencias
 from fastapi import FastAPI, HTTPException, Depends, status, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+
+# SQLAlchemy
 from sqlalchemy import create_engine, select, distinct
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
-from config import DATABASE_URL
-from models.Usuarios import Usuario
-from typing import List, Literal, Optional
 from sqlalchemy.exc import IntegrityError
+
+# Pydantic
 from pydantic import BaseModel, EmailStr
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+
+# JWT
 from jose import JWTError, jwt
+
+# Fechas y secretos
 from datetime import datetime, timedelta
 import secrets
 import os
 import bcrypt
+
+# Modelos y esquemas
+from config import DATABASE_URL
+from models.Usuarios import Usuario
+from schemas.Usuarios import UsuarioModel, UsuarioCreate, UsuarioResponse
 from models.Materias import Materia
 from models.Grados import Grado
 from models.Cursos import Curso
+from schemas.Materias import MateriaSchema, MateriaNombreSchema
+from schemas.Grados import GradoSchema
+from schemas.Cursos import CursoSchema
+from models.StudyPreferences import StudyPreference
+from schemas.StudyPreferences import StudyPreferencesSchema
+
+# Typing
+from typing import List, Literal, Optional
+
+# Logging
 import logging
 
-# Set up logging
+# Configuración de logging
 logging.basicConfig()
 logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
@@ -60,27 +81,6 @@ def read_root():
         "message": "Hello, this is my app"
     }
     
-
-class UsuarioModel(BaseModel):
-    cedula: int
-    edad: int | None
-    nombre: str
-    email: EmailStr
-    contraseña: str
-    rol: Literal["Estudiante", "Administrador"]
-
-    class Config:
-        from_attributes = True
-
-class UsuarioCreate(UsuarioModel):
-    pass
-
-class UsuarioResponse(UsuarioModel):
-    id: int
-
-    class Config:
-        from_attributes = True 
-
 @app.get("/api/v1/usuarios", response_model=List[UsuarioModel])
 def get_usuarios(db: Session = Depends(get_db)):
     usuarios = db.query(Usuario).all()
@@ -193,7 +193,6 @@ def hash_existing_passwords(db: Session):
 def init_db():
     Base.metadata.create_all(bind=engine)
 
-# Llama a esta función una vez al iniciar tu aplicación
 @app.on_event("startup")
 async def startup_event():
     init_db()
@@ -260,21 +259,6 @@ def validate_password(password: str) -> bool:
             any(c.islower() for c in password) and 
             any(c in "!@#$%^&*()_+-=[]{}|;:,.<>?" for c in password))
 
-
-class MateriaSchema(BaseModel):
-    id: int
-    nombre: str
-    # Otros campos que ya tengas...
-
-    class Config:
-        from_attributes = True
-
-class MateriaNombreSchema(BaseModel):
-    nombre: str
-
-    class Config:
-        from_attributes = True
-
 @app.get("/api/v1/materias", response_model=List[MateriaSchema])
 def get_materias(grado_id: Optional[int] = Query(None, description="ID del grado para filtrar materias"), db: Session = Depends(get_db)):
     query = db.query(Materia)
@@ -295,13 +279,6 @@ def get_nombres_materias(db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="No se encontraron materias")
     return nombres_materias
 
-class GradoSchema(BaseModel):
-    id: int
-    nombre: str
-    numero: int
-
-    class Config:
-        from_attributes = True
 
 @app.get("/api/v1/grados", response_model=List[GradoSchema])
 def get_grados(db: Session = Depends(get_db)):
@@ -313,13 +290,7 @@ def get_grados(db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="No se encontraron grados")
     return grados
 
-class CursoSchema(BaseModel):
-    id: int
-    nombre: str
-    materia_id: int
 
-    class Config:
-        from_attributes = True
         
 @app.get("/api/v1/cursos", response_model=List[CursoSchema])
 def get_cursos(db: Session = Depends(get_db)):
@@ -365,3 +336,29 @@ def check_db_connection(db: Session = Depends(get_db)):
         return {"status": "Database connection successful", "result": result}
     except Exception as e:
         return {"status": "Database connection failed", "error": str(e)}
+    
+@app.post('/api/v1/user-preferences', response_model=StudyPreferencesSchema)
+def save_user_preferences(study_preferences: StudyPreferencesSchema, db: Session = Depends(get_db)):
+    logging.info(f"Received preferences: {study_preferences}")
+    try:
+        user_preferences = db.query(StudyPreference).filter(StudyPreference.usuario_id == study_preferences.usuario_id).first()
+        if user_preferences:
+            user_preferences.preferencia = study_preferences.preferencia
+        else:
+            user_preferences = StudyPreference(
+                usuario_id=study_preferences.usuario_id,
+                preferencia=study_preferences.preferencia
+            )
+        db.add(user_preferences)
+        db.commit()
+        db.refresh(user_preferences)
+    except IntegrityError as e:
+        db.rollback()
+        raise HTTPException(status_code=409, detail="Conflict: User preference already exists")
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+    return user_preferences
+
+
+

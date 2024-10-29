@@ -10,6 +10,7 @@ import StudyPreferences from './pages/StudyPreferences.jsx';
 import Materias from './pages/Materias';
 import Grados from './pages/Grados';
 import Cursos from './pages/Cursos';
+import Profile from './pages/Profile.jsx';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route path='/grados' element={<Grados />} />
       <Route path='/cursos' element={<Cursos />} />
       <Route path='/cursos/:materiaId' element={<Cursos />} />
+      <Route path='/profile' element={<Profile />} />
     </Routes>
   )
 }
