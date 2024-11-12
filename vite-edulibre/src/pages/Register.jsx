@@ -1,14 +1,15 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { registrarUsuario } from '../services/api';
-import { showSuccessNotification, showUnexpectedError } from '../utils/notifications';
+import { registrarUsuario, saveUserPreferences } from '../services/api';
+import Swal from 'sweetalert2';
 import '../styles/Register.css';
 import Layout from '../components/Layout';
 import Form from '../components/Form';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import LogoRegister from '../assets/LogoLogin.svg';
+
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -20,12 +21,15 @@ const Register = () => {
     confirmarContraseña: '',
     rol: 'Estudiante'
   });
-  const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const validateCedula = (cedula) => {
     return /^\d{10}$/.test(cedula);
+  };
+
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
   const handleChange = (e) => {
@@ -40,13 +44,6 @@ const Register = () => {
       ...prevState,
       [name]: newValue
     }));
-
-    if (name === 'cedula') {
-      setErrors(prevErrors => ({
-        ...prevErrors,
-        cedula: validateCedula(newValue) ? '' : 'La cédula debe tener 10 dígitos'
-      }));
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -57,30 +54,82 @@ const Register = () => {
       newErrors.cedula = 'La cédula debe tener 10 dígitos';
     }
 
+    if (!formData.edad) {
+      newErrors.edad = 'La edad es requerida';
+    } else if (formData.edad < 0 || formData.edad > 120) {
+      newErrors.edad = 'La edad debe estar entre 0 y 120';
+    }
+
+    if (!formData.nombre) {
+      newErrors.nombre = 'El nombre es requerido';
+    }
+
+    if (!validateEmail(formData.email)) {
+      newErrors.email = 'El correo electrónico no es válido';
+    }
+
+    if (!formData.contraseña) {
+      newErrors.contraseña = 'La contraseña es requerida';
+    }
+
     if (formData.contraseña !== formData.confirmarContraseña) {
       newErrors.confirmarContraseña = 'Las contraseñas no coinciden';
     }
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+      for (const key in newErrors) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error en el formulario',
+          text: newErrors[key],
+        });
+      }
       return;
     }
 
     setIsLoading(true);
     try {
-      const dataToSend = Object.fromEntries(
-        Object.entries(formData).filter(([key]) => key !== 'confirmarContraseña')
-      );
-      await registrarUsuario(dataToSend);
-      showSuccessNotification('Registro exitoso', 'Tu cuenta ha sido creada');
-      navigate('/login');
+      const dataToSend = {
+        cedula: parseInt(formData.cedula),
+        edad: parseInt(formData.edad),
+        nombre: formData.nombre,
+        correo: formData.email,
+        contrasena: formData.contraseña,
+        rol: formData.rol
+      };
+      const user = await registrarUsuario(dataToSend);
+      
+      // Guardar las preferencias de estudio
+      const preferences = {
+        userId: user.id,
+        preferences: formData.studyPreferences
+      };
+      saveUserPreferences(  preferences);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Registro exitoso',
+        text: 'Tu cuenta ha sido creada',
+      });
+      navigate('/study-preferences'); // Redirigir a la página de preferencias de estudio
     } catch (error) {
-      showUnexpectedError('Error de registro', error.message);
+      if (error.response && error.response.data && error.response.data.detail) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de registro',
+          text: error.response.data.detail,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de registro',
+          text: 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde.',
+        });
+      }
     } finally {
       setIsLoading(false);
     }
   };
-
   return (
     <Layout>
       <div className='register-page'>
@@ -98,9 +147,7 @@ const Register = () => {
                 value={formData.cedula}
                 onChange={handleChange}
                 required
-                className={errors.cedula ? 'input-error' : ''}
               />
-              {errors.cedula && <span className="error-message">{errors.cedula}</span>}
               <Input
                 type="number"
                 name="edad"
@@ -142,9 +189,7 @@ const Register = () => {
                 value={formData.confirmarContraseña}
                 onChange={handleChange}
                 required
-                className={errors.confirmarContraseña ? 'input-error' : ''}
               />
-              {errors.confirmarContraseña && <span className="error-message">{errors.confirmarContraseña}</span>}
               <select
                 name="rol"
                 value={formData.rol}

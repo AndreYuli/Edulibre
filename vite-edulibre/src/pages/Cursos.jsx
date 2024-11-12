@@ -18,13 +18,10 @@ const Cursos = () => {
     const fetchCursos = async () => {
       try {
         console.log('Fetching courses for materiaId:', materiaId);
-        const data = await getCourses();
+        const data = await getCourses(materiaId);
         console.log('Received data:', data);
         
-        const cursosFiltrados = data.filter(curso => curso.materia_id === parseInt(materiaId));
-        console.log('Filtered courses:', cursosFiltrados);
-        
-        const formattedCursos = cursosFiltrados.map(curso => ({
+        const formattedCursos = data.map(curso => ({
           id: curso.id,
           value: (
             <div className="curso-content">

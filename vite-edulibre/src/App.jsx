@@ -24,7 +24,6 @@ function App() {
       <Route path='/materias' element={<Materias />} />
       <Route path='/materias/:gradoId' element={<Materias />} />
       <Route path='/grados' element={<Grados />} />
-      <Route path='/cursos' element={<Cursos />} />
       <Route path='/cursos/:materiaId' element={<Cursos />} />
       <Route path='/profile' element={<Profile />} />
     </Routes>

@@ -8,7 +8,7 @@ import EmojiRain from '../components/EmojiRain';
 const EMOJI_MAP = {
   'Matemáticas': '🧮',
   'Lectura Crítica': '📚',
-  'Sociales y Ciudadanas': '🌎',
+  'Ciencias Sociales': '🌎',
   'Ciencias Naturales': '🔬',
   'Inglés': '🌐'
 };
@@ -38,7 +38,7 @@ const Materias = () => {
 
   const handleMateriaClick = (materiaId) => {
     if (gradoId) {
-      navigate(`/cursos`);
+      navigate(`/cursos/${materiaId}?gradoId=${gradoId}`);
     } else {
       navigate(`/cursos/${materiaId}`);
     }
@@ -58,8 +58,8 @@ const Materias = () => {
       <SelectionPage
         title={title}
         introMessage={introMessage}
-        items={materias.map((materia, index) => ({
-          id: index,
+        items={materias.map((materia) => ({
+          id: materia.id,
           value: (
             <div className="materia-content">
               <span className="materia-emoji">{EMOJI_MAP[materia.nombre] || ''}</span>
