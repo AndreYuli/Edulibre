@@ -11,7 +11,6 @@ import Materias from './pages/Materias';
 import Grados from './pages/Grados';
 import Cursos from './pages/Cursos';
 import Profile from './pages/Profile.jsx';
-import Lecciones from './pages/Lecciones.jsx';
 
 function App() {
   return (
@@ -27,7 +26,6 @@ function App() {
       <Route path='/grados' element={<Grados />} />
       <Route path='/cursos/:materiaId' element={<Cursos />} />
       <Route path='/profile' element={<Profile />} />
-      <Route path='/lecciones/:cursoId' element={<Lecciones />} />
     </Routes>
   )
 }

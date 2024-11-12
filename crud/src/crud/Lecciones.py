@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from models import Leccion
-from src.schemas.Lecciones import LeccionCreate, LeccionUpdate
+from schemas import LeccionCreate, LeccionUpdate
 
 def get_leccion(db: Session, leccion_id: int):
     return db.query(Leccion).filter(Leccion.id == leccion_id).first()

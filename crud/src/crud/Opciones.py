@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from models import Opcion
-from src.schemas.Opciones import OpcionCreate, OpcionUpdate
+from schemas import OpcionCreate, OpcionUpdate
 
 def get_opcion(db: Session, opcion_id: int):
     return db.query(Opcion).filter(Opcion.id == opcion_id).first()
