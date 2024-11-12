@@ -1,41 +1,60 @@
 @import './SharedStyles.css';
 
+.lecciones-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
 .leccion-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  width: 100%;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: box-shadow 0.3s ease;
 }
 
-.leccion-emoji {
-  font-size: 4rem;
-  margin-bottom: 1rem;
+.leccion-content:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.leccion-nombre {
-  font-size: 1.3rem;
+.leccion-titulo {
+  font-size: 1.5rem;
   color: var(--primary-color);
   font-weight: bold;
   text-align: center;
 }
 
+.leccion-contenido {
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
-  .leccion-emoji {
-    font-size: 3rem;
+  .leccion-titulo {
+    font-size: 1.3rem;
   }
 
-  .leccion-nombre {
-    font-size: 1.1rem;
+  .leccion-contenido {
+    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
-  .leccion-emoji {
-    font-size: 2.5rem;
+  .leccion-titulo {
+    font-size: 1.1rem;
   }
 
-  .leccion-nombre {
-    font-size: 1rem;
+  .leccion-contenido {
+    font-size: 0.8rem;
   }
 }
