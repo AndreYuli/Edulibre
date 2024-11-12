@@ -32,7 +32,7 @@ export const loginUsuario = async (credentials) => {
     formData.append('username', credentials.username);
     formData.append('password', credentials.password);
 
-    const response = await api.post('token', formData, {
+    const response = await api.post('api/v1/usuarios/token', formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -46,7 +46,7 @@ export const loginUsuario = async (credentials) => {
 // Nueva función para solicitar el restablecimiento de contraseña
 export const solicitarRestablecimientoContrasena = async (email) => {
   try {
-    const response = await api.post('api/forgot-password', { email });
+    const response = await api.post('api/v1/usuarios/forgot-password', { correo: email });
     return response.data;
   } catch (error) {
     handleError(error);
@@ -56,23 +56,23 @@ export const solicitarRestablecimientoContrasena = async (email) => {
 // Nueva función para restablecer la contraseña
 export const restablecerContrasena = async (token, newPassword) => {
   try {
-    const response = await api.post('api/reset-password', { token, new_password: newPassword });
+    const response = await api.post('api/v1/usuarios/reset-password', { token, nueva_contrasena: newPassword });
     return response.data;
   } catch (error) {
     handleError(error);
   }
 };
 
-// Nueva función para guardar las preferencias de estudio del usuario
 export const saveUserPreferences = async (preferences) => {
   try {
-    const response = await api.post('api/v1/user-preferences', preferences)  // {{ edit_1 }}
-    return response.data;  // Devuelve los datos de la respuesta
+    const response = await api.post('api/v1/study-preferences', preferences);
+    return response.data;
   } catch (error) {
-    handleError(error);  // Manejo de errores
-    throw error;  // Vuelve a lanzar el error para que pueda ser manejado más arriba
+    handleError(error);
+    throw error;
   }
 };
+
 
 // Nueva función para obtener las preferencias de estudio del usuario
 export const getUserPreferences = async () => {
@@ -84,9 +84,10 @@ export const getUserPreferences = async () => {
   }
 };
 
+
 export const getMateriasGeneral = async () => {
   try {
-    const response = await api.get('api/v1/materias/nombres');
+    const response = await api.get('/api/v1/materias');
     return response.data;
   } catch (error) {
     handleError(error);
@@ -102,15 +103,14 @@ export const getUserProgress = async () => {
   }
 };
 
-export const getCourses = async () => {
+export const getCourses = async (materiaId) => {
   try {
-    const response = await api.get('api/v1/cursos');
+    const response = await api.get(`/api/v1/cursos?materia_id=${materiaId}`);
     return response.data;
   } catch (error) {
     handleError(error);
   }
 };
-
 export const createCourse = async (courseData) => {
   try {
     const response = await api.post('api/v1/cursos', courseData);
@@ -122,7 +122,7 @@ export const createCourse = async (courseData) => {
 
 export const getSubjects = async () => {
   try {
-    const response = await api.get('api/v1/materias/nombres');
+    const response = await api.get('/api/v1/materias');
     return response.data;
   } catch (error) {
     handleError(error);
@@ -138,7 +138,6 @@ export const updateCourse = async (courseId, courseData) => {
   }
 };
 
-
 export const deleteCourse = async (courseId) => {
   try {
     const response = await api.delete(`api/v1/cursos/${courseId}`);
@@ -150,7 +149,7 @@ export const deleteCourse = async (courseId) => {
 
 export const getGrados = async () => {
   try {
-    const response = await api.get('api/v1/grados');
+    const response = await api.get('/api/v1/grados');
     return response.data;
   } catch (error) {
     handleError(error);
