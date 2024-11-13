@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from models import Respuesta
-from schemas import RespuestaCreate, RespuestaUpdate
+from src.models.Respuestas import Respuesta
+from src.schemas.Respuestas import RespuestaCreate, RespuestaUpdate
 
 def get_respuesta(db: Session, respuesta_id: int):
     return db.query(Respuesta).filter(Respuesta.id == respuesta_id).first()

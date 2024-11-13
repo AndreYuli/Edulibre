@@ -14,7 +14,7 @@ class RespuestaCreate(RespuestaBase):
 class RespuestaUpdate(RespuestaBase):
     pass
 
-class Respuesta(RespuestaBase):
+class RespuestaSchema(RespuestaBase):
     id: int
     fecha: Optional[datetime] = None
 

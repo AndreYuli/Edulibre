@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from models import Resultado
-from schemas import ResultadoCreate, ResultadoUpdate
+from src.models.Resultados import Resultado
+from src.schemas.Resultados import ResultadoCreate, ResultadoUpdate
 
 def get_resultado(db: Session, resultado_id: int):
     return db.query(Resultado).filter(Resultado.id == resultado_id).first()

@@ -1,32 +1,43 @@
+# In crud/src/crud/Preguntas.py
 from sqlalchemy.orm import Session
-from src.models import Progresos
-from src.schemas import ProgresoCreate, ProgresoUpdate
+from src.models.Preguntas import Pregunta as PreguntaModel  # SQLAlchemy model
+from src.schemas.Preguntas import Pregunta as PreguntaSchema  # Pydantic model
 
-def get_progreso(db: Session, progreso_id: int):
-    return db.query(Progresos).filter(Progresos.id == progreso_id).first()
+def get_pregunta(db: Session, pregunta_id: int):
+    """Retrieve a single Pregunta by ID."""
+    return db.query(PreguntaModel).filter(PreguntaModel.id == pregunta_id).first()
 
-def get_progresos(db: Session, skip: int = 0, limit: int = 10):
-    return db.query(Progresos).offset(skip).limit(limit).all()
+def get_preguntas(db: Session, skip: int = 0, limit: int = 10):
+    """Retrieve a list of Preguntas with pagination."""
+    return db.query(PreguntaModel).offset(skip).limit(limit).all()
 
-def create_progreso(db: Session, progreso: ProgresoCreate):
-    db_progreso = Progresos(**progreso.dict())
-    db.add(db_progreso)
+def create_pregunta(db: Session, pregunta: PreguntaSchema):
+    """Create a new Pregunta."""
+    db_pregunta = PreguntaModel(
+        leccion_id=pregunta.leccion_id,
+        texto=pregunta.texto,
+        tipo=pregunta.tipo
+    )
+    db.add(db_pregunta)
     db.commit()
-    db.refresh(db_progreso)
-    return db_progreso
+    db.refresh(db_pregunta)
+    return db_pregunta
 
-def update_progreso(db: Session, progreso_id: int, progreso: ProgresoUpdate):
-    db_progreso = db.query(Progresos).filter(Progresos.id == progreso_id).first()
-    if db_progreso:
-        for key, value in progreso.dict().items():
-            setattr(db_progreso, key, value)
+def update_pregunta(db: Session, pregunta_id: int, pregunta: PreguntaSchema):
+    """Update an existing Pregunta."""
+    db_pregunta = db.query(PreguntaModel).filter(PreguntaModel.id == pregunta_id).first()
+    if db_pregunta:
+        db_pregunta.leccion_id = pregunta.leccion_id
+        db_pregunta.texto = pregunta.texto
+        db_pregunta.tipo = pregunta.tipo
         db.commit()
-        db.refresh(db_progreso)
-    return db_progreso
+        db.refresh(db_pregunta)
+    return db_pregunta
 
-def delete_progreso(db: Session, progreso_id: int):
-    db_progreso = db.query(Progresos).filter(Progresos.id == progreso_id).first()
-    if db_progreso:
-        db.delete(db_progreso)
+def delete_pregunta(db: Session, pregunta_id: int):
+    """Delete a Pregunta by ID."""
+    db_pregunta = db.query(PreguntaModel).filter(PreguntaModel.id == pregunta_id).first()
+    if db_pregunta:
+        db.delete(db_pregunta)
         db.commit()
-    return db_progreso
+    return db_pregunta

@@ -1,21 +1,10 @@
+# In crud/src/schemas/Preguntas.py
 from pydantic import BaseModel
 from typing import Optional
-from datetime import datetime
 
-class PreguntaBase(BaseModel):
-    leccion_id: int
-    texto_pregunta: str
-    tipo_pregunta: str
-
-class PreguntaCreate(PreguntaBase):
-    pass
-
-class PreguntaUpdate(PreguntaBase):
-    pass
-
-class Pregunta(PreguntaBase):
+class Pregunta(BaseModel):
     id: int
-    created_at: Optional[datetime] = None
-
-    class Config:
-        from_attributes = True
+    leccion_id: int  # Match the field name
+    texto: str  # Match the field name
+    tipo: str  # Match the field name
+    creado_en: Optional[str] = None  # Optional field for created timestamp

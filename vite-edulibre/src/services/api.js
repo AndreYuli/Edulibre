@@ -156,4 +156,150 @@ export const getGrados = async () => {
   }
 };
 
+// Rutas para Grados
+export const crearGrado = async (gradoData) => {
+  try {
+    const response = await api.post('api/v1/grados', gradoData);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const obtenerGrados = async () => {
+  try {
+    const response = await api.get('api/v1/grados');
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const actualizarGrado = async (gradoId, gradoData) => {
+  try {
+    const response = await api.put(`api/v1/grados/${gradoId}`, gradoData);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const eliminarGrado = async (gradoId) => {
+  try {
+    const response = await api.delete(`api/v1/grados/${gradoId}`);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Rutas para Materias
+export const crearMateria = async (materiaData) => {
+  try {
+    const response = await api.post('api/v1/materias', materiaData);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const obtenerMaterias = async () => {
+  try {
+    const response = await api.get('api/v1/materias');
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Rutas para Cursos
+export const crearCurso = async (cursoData) => {
+  try {
+    const response = await api.post('api/v1/cursos', cursoData);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Rutas para Lecciones
+export const crearLeccion = async (leccionData) => {
+  try {
+    const response = await api.post('api/v1/lecciones', leccionData);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Rutas para Preguntas
+export const crearPregunta = async (preguntaData) => {
+  try {
+    const response = await api.post('api/v1/preguntas', preguntaData);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Rutas para Opciones
+export const crearOpcion = async (opcionData) => {
+  try {
+    const response = await api.post('api/v1/opciones', opcionData);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Rutas para Usuarios
+export const obtenerUsuarios = async () => {
+  try {
+    const response = await api.get('api/v1/usuarios');
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Rutas para Progreso
+export const obtenerProgreso = async (usuarioId) => {
+  try {
+    const response = await api.get(`api/v1/progreso/${usuarioId}`);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Rutas para Exámenes
+export const crearExamen = async (examenData) => {
+  try {
+    const response = await api.post('api/v1/examenes', examenData);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Rutas para Resultados
+export const obtenerResultados = async (examenId) => {
+  try {
+    const response = await api.get(`api/v1/resultados/${examenId}`);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+// Rutas para Preferencias de Estudio
+export const crearPreferenciaEstudio = async (preferenciaData) => {
+  try {
+    const response = await api.post('api/v1/preferencias-estudio', preferenciaData);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
 export default api;

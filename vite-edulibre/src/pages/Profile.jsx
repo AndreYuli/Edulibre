@@ -1,63 +1,95 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";// Si no usas Link, considera eliminarlo
-
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import '../styles/Profile.css';
+import SelectionPage from '../components/SelectionPage'; // Importar SelectionPage
 
 const Profile = () => {
-  // Estado inicial del perfil del usuario
-  const [user, setUser] = useState({
-    name: 'Juan Pérez',
-    email: 'juan.perez@example.com',
-    phone: '+123456789',
-    registrationDate: '01/01/2022',
-    lastAccess: '15/03/2023',
-    completedCourses: 5,
-    ongoingCourses: 2,
-    achievements: 3,
-  });
+  const [user, setUser] = useState(null);
+  const [preferenciasEstudio, setPreferenciasEstudio] = useState([]);
+  const [materias, setMaterias] = useState([]); // Nuevo estado para materias
 
-  // Función para manejar la edición de la información del usuario
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get('URL_DE_TU_API'); 
+        setUser(response.data); 
+        setPreferenciasEstudio(response.data.preferenciasEstudio || []);
+        setMaterias(response.data.materias || []); // Asumiendo que la API devuelve materias
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []); // El array vacío asegura que se ejecute solo una vez al montar el componente
+
   const handleEdit = () => {
-    // Example of updating user information
-    setUser({ ...user, name: 'Nuevo Nombre' }); // Update the user's name
-    console.log('Edit user information');
+    // Logic for editing user information
+    console.log('Edit button clicked');
   };
 
-  // Función para manejar la eliminación de la cuenta
   const handleDeleteAccount = () => {
-    // Implementa la lógica para eliminar la cuenta del usuario
-    console.log('Delete user account');
+    // Logic for deleting the user account
+    console.log('Delete account button clicked');
+  };
+
+  if (!user) {
+    return <div>Cargando...</div>; // Muestra un mensaje de carga mientras se obtienen los datos
+  }
+
+  const handleMateriaClick = (materiaId) => {
+    // Lógica para manejar el clic en una materia (puedes navegar a otra página si es necesario)
+    console.log(`Materia seleccionada: ${materiaId}`);
   };
 
   return (
     <div className="user-profile">
       <h1>Perfil de Usuario</h1>
       <div className="profile-info">
-        <img src="path/to/profile-pic.jpg" alt="Foto de Perfil" className="profile-pic" /> {/* Verifica la ruta de la imagen */}
-        <p><strong>Nombre:</strong> {user.name}</p>
-        <p><strong>Correo Electrónico:</strong> {user.email}</p>
-        <p><strong>Teléfono:</strong> {user.phone}</p>
-        <p><strong>Fecha de Registro:</strong> {user.registrationDate}</p>
-        <p><strong>Último Acceso:</strong> {user.lastAccess}</p>
+        <div className="profile-pic" /> {/* Imagen de perfil */}
+        <div className="user-details">
+          <p><strong>Nombre:</strong> {user.nombre}</p>
+          <p><strong>Correo Electrónico:</strong> {user.correo}</p>
+          <p><strong>Cédula:</strong> {user.cedula}</p>
+          <p><strong>Edad:</strong> {user.edad}</p>
+        </div>
       </div>
 
       <div className="account-settings">
         <h2>Configuración de Cuenta</h2>
-        <button onClick={handleEdit}>Editar Información</button>
-        <button onClick={handleDeleteAccount}>Eliminar Cuenta</button>
+        <div className="button-group">
+          <button onClick={handleEdit}>Editar Información</button>
+          <button onClick={handleDeleteAccount}>Eliminar Cuenta</button>
+        </div>
       </div>
 
-      <div className="user-activity">
-        <h2>Actividad del Usuario</h2>
-        <p><strong>Cursos Completados:</strong> {user.completedCourses}</p>
-        <p><strong>Cursos en Progreso:</strong> {user.ongoingCourses}</p>
-        <p><strong>Logros:</strong> {user.achievements}</p>
+      <div className="study-preferences">
+        <h2>Preferencias de Estudio</h2>
+        {preferenciasEstudio.length > 0 ? (
+          preferenciasEstudio.map((preferencia, index) => (
+            <p key={index}><strong>Preferencia {index + 1}:</strong> {preferencia.preferencia}</p>
+          ))
+        ) : (
+          <p>No hay preferencias de estudio disponibles.</p>
+        )}
       </div>
 
-      <div className="social-interaction">
-        <h2>Interacción Social</h2>
-        <p><strong>Comentarios:</strong> 10</p>
-        <p><strong>Participación en Foros:</strong> 3</p>
+      <div className="materias">
+        <h2>Materias</h2>
+        <SelectionPage
+          title="Materias Disponibles"
+          introMessage="Selecciona una materia para más detalles."
+          items={materias.map((materia) => ({
+            id: materia.id,
+            value: (
+              <div className="materia-content">
+                <span className="materia-nombre">{materia.nombre}</span>
+              </div>
+            )
+          }))}
+          onItemClick={handleMateriaClick}
+        />
       </div>
     </div>
   );
