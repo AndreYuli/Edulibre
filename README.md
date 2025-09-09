@@ -2,7 +2,7 @@
 
 ## Descripción General
 
-**Edulibre** es una plataforma web educativa inspirada en la experiencia de aprendizaje de Duolingo, dirigida a adultos mayores colombianos. Su objetivo es facilitar el acceso a la educación digital, con una experiencia motivadora, gamificada y adaptada a las necesidades de este público. El proyecto busca reducir la brecha digital y promover el aprendizaje continuo, usando tecnología accesible y moderna.
+**Edulibre** es una plataforma web educativa inspirada en la experiencia de aprendizaje de Duolingo, dirigida a adultos colombianos. Su objetivo es facilitar el acceso a la educación digital, con una experiencia motivadora, gamificada y adaptada a las necesidades de este público. El proyecto busca reducir la brecha digital y promover el aprendizaje continuo, usando tecnología accesible y moderna.
 
 ---
 
